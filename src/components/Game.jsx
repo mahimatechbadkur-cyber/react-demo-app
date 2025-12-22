@@ -6,8 +6,6 @@ const [squares, setSquares] = useState(Array(9).fill(null));
 const [xIsNext, setXIsNext] = useState(true);
 
   function handlePlay(nextSquares) {
-    console.log("value of square", squares);
-    console.log("value of nextSquare", nextSquares);
      setSquares(nextSquares);
      setXIsNext(!xIsNext);
   }
