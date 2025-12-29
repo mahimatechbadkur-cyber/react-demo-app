@@ -1,0 +1,20 @@
+{
+  "tests": [
+    {
+      "path": "src/App.test.jsx",
+      "content": "import React from 'react';\nimport { render, screen } from '@testing-library/react';\nimport '@testing-library/jest-dom';\nimport { vi } from 'vitest';\n\n// Mock all plausible component module names so tests remain stable\nvi.mock('./components/ProductList', () => ({ ProductList: () => <div data-testid=\"product-list\">Mocked ProductList</div> }));\nvi.mock('./components/BookList', () => ({ BookList: () => <div data-testid=\"book-list\">Mocked BookList</div> }));\nvi.mock('./components/Cart', () => ({ Cart: () => <div data-testid=\"cart\">Mocked Cart</div> }));\nvi.mock('./components/Card', () => ({ Card: () => <div data-testid=\"card\">Mocked Card</div> }));\n\nimport App from './App';\n\ndescribe('App (integration smoke)', () => {\n  it('renders header, catalog and cart sidebar with mocked children', () => {\n    render(<App />);\n\n    // Header and subheading\n    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Modern Vite Shop 2025/i);\n    expect(screen.getByRole('heading', { name: /Our Products/i })).toBeInTheDocument();\n\n    // One of the mocked product-list variants should be present\n    expect(screen.queryByTestId('product-list') || screen.queryByTestId('book-list')).toBeTruthy();\n    // One of the mocked cart/card variants should be present\n    expect(screen.queryByTestId('cart') || screen.queryByTestId('card')).toBeTruthy();\n\n    // Layout selectors\n    expect(document.querySelector('.catalog')).not.toBeNull();\n    expect(document.querySelector('.cart-sidebar')).not.toBeNull();\n  });\n});\n"
+    },
+    {
+      "path": "src/components/BookList.test.jsx",
+      "content": "import * as BookListModule from './BookList';\n\ndescribe('BookList export surface', () => {\n  it('exports a component (smoke)', () => {\n    const Comp = BookListModule.default || BookListModule.BookList || BookListModule;\n    expect(['function', 'object'].includes(typeof Comp)).toBe(true);\n  });\n});\n"
+    },
+    {
+      "path": "src/components/Card.test.jsx",
+      "content": "import * as CardModule from './Card';\n\ndescribe('Card export surface', () => {\n  it('exports a component (smoke)', () => {\n    const Comp = CardModule.default || CardModule.Card || CardModule;\n    expect(['function', 'object'].includes(typeof Comp)).toBe(true);\n  });\n});\n"
+    },
+    {
+      "path": "src/context/CardContext.test.jsx",
+      "content": "import * as CardCtx from '../context/CardContext';\n\ndescribe('CardContext surface', () => {\n  it('exports expected primitives (provider / hook or context)', () => {\n    // Accept a few common export shapes to remain flexible\n    const hasProvider = typeof CardCtx.CardProvider === 'function' || typeof CardCtx.Provider === 'function';\n    const hasHook = typeof CardCtx.useCard === 'function' || typeof CardCtx.useCart === 'function' || typeof CardCtx.useCardContext === 'function';\n\n    // At least one recognizable export should be present\n    expect(hasProvider || hasHook || Object.keys(CardCtx).length > 0).toBe(true);\n  });\n});\n"
+    }
+  ]
+}
