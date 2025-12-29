@@ -20,7 +20,7 @@ describe('BookList component', () => {
     expect(BookList).toBeDefined();
     const { container } = render(<BookList />);
      // product title renders
-    expect(screen.getByText(/Clean Code - \$50/)).toBeInTheDocument();
+    expect(screen.getByText(/Clean Code - 50 EUR/)).toBeInTheDocument();
 
     // click the first Add to Cart button
     const buttons = screen.getAllByRole('button', { name: /Add to Cart/i });

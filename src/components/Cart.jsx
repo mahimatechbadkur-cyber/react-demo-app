@@ -1,3 +1,4 @@
+import { CURRENCY } from '../common/constant.js';
 import { useCart } from '../context/CardContext.jsx';
 import { calculateCartTotals } from '../utils/getDiscount.js';
 
@@ -27,7 +28,7 @@ export const Cart = () => {
           )}
 
           {cart.map(item => (
-            <p key={item.id}>{item.title} x {item.quantity} - ${item.price * item.quantity}</p>
+            <p key={item.id}>{item.title} x {item.quantity} - {item.price * item.quantity} {CURRENCY}</p>
           ))}
         </>
       ) : 'No items found'}
