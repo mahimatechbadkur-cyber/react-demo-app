@@ -17,9 +17,9 @@ function App() {
           <BookList />
         </section>
 
-        <aside className="cart-sidebar">
+        <aside className="cart-sidebar" >
           {/* This component displays the current state of the cart */}
-          <Cart />
+        <Cart />
         </aside>
       </main>
 
